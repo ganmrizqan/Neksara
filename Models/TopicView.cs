@@ -11,7 +11,7 @@ namespace Neksara.Models
         public int TopicId { get; set; }
         public Topic? Topic { get; set; }
 
-        public int UserId { get; set; }
+       public int? IdUser { get; set; }
         public User? User { get; set; }
     }
 }

@@ -24,12 +24,25 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ELearning" asp-action="Index">E-Learning</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Learning" asp-action="Index">E-Learning</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="contact">Contact Us</a>
                         </li>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                        <li class="nav-item">
+                        <a class="btn btn-dark px-4" href="/Admin">Admin Panel</a>
+                          </li>
+                         }
+                         else
+                         {
+                         <li class="nav-item">
+                        <a class="btn btn-outline-dark px-4" href="/Auth/Login">Login</a>
+                        </li>
+                        }
                     </ul>
+                                    
                 </div>
             </div>
         </nav>

@@ -29,3 +29,11 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+
+.topic-header {
+    height: 600px;          /* atur tinggi header */
+    object-fit: cover;      /* crop tengah, gak gepeng */
+    width: 100%;
+}
+

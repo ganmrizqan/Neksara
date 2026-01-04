@@ -16,38 +16,225 @@ namespace Neksara.Data
         public DbSet<TopicView> TopicViews { get; set; }
         public DbSet<SearchLog> SearchLogs { get; set; }    
         public DbSet<Admin> Admins { get; set; }
+        public DbSet<ArchiveTopic> ArchiveTopics { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Feedback>()
-                .HasOne(f => f.Topic)
-                .WithMany(t => t.Feedbacks)
-                .HasForeignKey(f => f.TopicId)
-                .OnDelete(DeleteBehavior.Cascade);
+            // ===== USERS =====
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("Users");
 
-            modelBuilder.Entity<Feedback>()
-                .HasOne(f => f.User)
-                .WithMany(u => u.Feedbacks)
-                .HasForeignKey(f => f.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
+                entity.HasKey(e => e.UserId);
 
-            modelBuilder.Entity<Feedback>()
-                .HasOne(f => f.Category)
-                .WithMany(c => c.Feedbacks)
-                .HasForeignKey(f => f.CategoryId)
-                .OnDelete(DeleteBehavior.NoAction);
+                entity.Property(e => e.UserName)
+                      .IsRequired()
+                      .HasMaxLength(100);
 
-            modelBuilder.Entity<User>().ToTable("Users");
-            modelBuilder.Entity<Category>().ToTable("Categories");
-            modelBuilder.Entity<Topic>().ToTable("Topics");
-            modelBuilder.Entity<Feedback>().ToTable("Feedbacks");
-            modelBuilder.Entity<TopicView>().ToTable("TopicViews");
-            modelBuilder.Entity<SearchLog>().ToTable("SearchLogs");
-            modelBuilder.Entity<Admin>().ToTable("Admins");
-            modelBuilder.Entity<ContactMessage>().ToTable("ContactMessages");
+                entity.Property(e => e.Password)
+                      .IsRequired()
+                      .HasMaxLength(100);
+
+                entity.Property(e => e.PhotoUrl)
+                      .HasMaxLength(255);
+
+                entity.Property(e => e.Role)
+                      .IsRequired()
+                      .HasMaxLength(50);
+
+                entity.Property(e => e.CreatedAt)
+                      .HasDefaultValueSql("GETDATE()");
+            });
+
+            // ===== CATEGORIES =====
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.ToTable("Category");
+
+                entity.HasKey(e => e.CategoryId);
+
+                entity.Property(e => e.CategoryName)
+                      .IsRequired()
+                      .HasMaxLength(100);
+
+                entity.Property(e => e.Description)
+                      .HasMaxLength(255);
+
+                entity.Property(e => e.IsDeleted)
+                      .HasDefaultValue(false);
+
+                entity.Property(e => e.CreatedAt)
+                      .HasDefaultValueSql("GETDATE()");
+            });
+
+            // ===== TOPICS =====
+            modelBuilder.Entity<Topic>(entity =>
+            {
+                entity.ToTable("Topics");
+
+                entity.HasKey(e => e.TopicId);
+
+                entity.Property(e => e.TopicName)
+                      .IsRequired()
+                      .HasMaxLength(150);
+
+                entity.Property(e => e.Description)
+                      .IsRequired();
+
+                entity.Property(e => e.TopicPicture)
+                      .HasMaxLength(255);
+
+                entity.Property(e => e.VideoUrl)
+                      .HasMaxLength(255);
+
+                entity.Property(e => e.ViewCount)
+                      .HasDefaultValue(0);
+
+                entity.Property(e => e.IsDeleted)
+                      .HasDefaultValue(false);
+
+                entity.Property(e => e.CreatedAt)
+                      .HasDefaultValueSql("GETDATE()");
+
+                entity.HasOne(e => e.Category)
+                      .WithMany(c => c.Topics)
+                      .HasForeignKey(e => e.CategoryId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // ===== TOPIC VIEW =====
+            modelBuilder.Entity<TopicView>(entity =>
+            {
+                entity.ToTable("TopicView");
+
+                entity.HasKey(e => e.TopicViewId);
+
+                entity.Property(e => e.ViewedAt)
+                      .HasDefaultValueSql("GETDATE()");
+
+                entity.HasOne(e => e.User)
+                      .WithMany(u => u.TopicViews)
+                      .HasForeignKey(e => e.IdUser);
+
+                entity.HasOne(e => e.Topic)
+                      .WithMany(t => t.TopicViews)
+                      .HasForeignKey(e => e.TopicId);
+            });
+
+            // ===== SEARCH LOG =====
+            modelBuilder.Entity<SearchLog>(entity =>
+            {
+                entity.ToTable("SearchLogs");
+
+                entity.HasKey(e => e.SearchLogId);
+
+                entity.Property(e => e.SearchQuery)
+                      .IsRequired()
+                      .HasMaxLength(100);
+
+                entity.Property(e => e.SearchAt)
+                      .HasDefaultValueSql("GETDATE()");
+            });
+
+            // ===== FEEDBACK =====
+            modelBuilder.Entity<Feedback>(entity =>
+            {
+                entity.ToTable("Feedbacks");
+
+                entity.HasKey(e => e.FeedbackId);
+
+                entity.Property(e => e.TargetId)
+                      .IsRequired();    
+
+             entity.Property(e => e.TargetType)
+                      .IsRequired()
+                      .HasMaxLength(50);
+
+                 entity.Property(e => e.Name)
+                      .IsRequired()
+
+                      .HasMaxLength(100);
+                entity.Property(e => e.Role)
+                      .IsRequired()
+                      .HasMaxLength(50);
+                      
+                entity.Property(e => e.Description)
+                      .IsRequired()
+                      .HasMaxLength(500);
+
+                entity.Property(e => e.Rating)
+                      .HasDefaultValue(0);
+
+                entity.Property(e => e.IsApproved)
+                      .HasDefaultValue(false);
+
+                entity.Property(e => e.IsVisible)
+                      .HasDefaultValue(true);
+
+                entity.Property(e => e.CreatedAt)
+                      .HasDefaultValueSql("GETDATE()");
+
+                entity.HasOne(e => e.User)
+                      .WithMany(u => u.Feedbacks)
+                      .HasForeignKey(e => e.UserId);
+
+            });
+
+                              // ===== ARCHIVE TOPIC =====
+                  modelBuilder.Entity<ArchiveTopic>(entity =>
+                  {
+                  entity.ToTable("ArchiveTopics");
+
+                  entity.HasKey(e => e.ArchiveTopicId);
+
+                  entity.Property(e => e.TopicName)
+                        .IsRequired()
+                        .HasMaxLength(150);
+
+                  entity.Property(e => e.Description)
+                        .IsRequired();
+
+                  entity.Property(e => e.VideoUrl)
+                        .HasMaxLength(255);
+
+                  entity.Property(e => e.ViewCount)
+                        .HasDefaultValue(0);
+
+                  entity.Property(e => e.ArchivedAt)
+                        .HasDefaultValueSql("GETDATE()");
+
+                  entity.HasOne(e => e.Category)
+                        .WithMany()
+                        .HasForeignKey(e => e.CategoryId)
+                        .OnDelete(DeleteBehavior.Restrict);
+                  });
+
+                modelBuilder.Entity<ContactMessage>(entity =>
+                 {
+                 entity.HasKey(cm => cm.ContactMessageId);
+
+                entity.Property(cm => cm.Name)
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                entity.Property(cm => cm.Email)
+                        .IsRequired()
+                        .HasMaxLength(150);
+
+                entity.Property(cm => cm.Subject)
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                entity.Property(cm => cm.Message)
+                        .IsRequired();
+
+                entity.Property(cm => cm.CreatedAt)
+                        .HasDefaultValueSql("GETDATE()")
+                        .IsRequired();
+            });
         }
-    
     }
 }
