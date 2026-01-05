@@ -1,8 +1,38 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@* Views/Home/Index.cshtml *@
+@{
+    ViewData["Title"] = "Neksara - E-Learning Platform";
+    ViewData["Description"] = "Belajar skill baru dengan kursus online berkualitas";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero Section -->
+@await Html.PartialAsync("_HeroSection")
+
+<!-- Categories Section -->
+<section id="services" class="services section light-background">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Kategori Paling Populer</h2>
+        <p>Kategori yang paling dimintai oleh karyawan</p>
+    </div><!-- End Section Title -->
+    <div class="container">
+
+        <div class="row gy-4">
+@await Html.PartialAsync("_Categories")
+
+            <!-- Topics Section -->
+            <section id="recent-blog-postst" class="recent-blog-postst section light-background">
+
+                <!-- Section Title -->
+                <div class="container section-title" data-aos="fade-up">
+                    <h2>Kategori</h2>
+                    <p>Paling Populer</p>
+                </div><!-- End Section Title -->
+
+                <div class="container">
+
+                    <div class="row gy-5">
+@await Html.PartialAsync("_Topics")
+
+                        <!-- Feedback Section -->
+@await Html.PartialAsync("_Feedback")

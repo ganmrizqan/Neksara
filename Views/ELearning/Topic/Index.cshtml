@@ -1,0 +1,92 @@
+@* Views/Home/Index.cshtml *@
+@{
+    ViewData["Title"] = "Neksara - E-Learning Platform";
+    ViewData["Description"] = "Belajar skill baru dengan kursus online berkualitas";
+}
+
+<!-- Search Section -->
+<div class="search-section bg-white py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <br>
+                <div class="search-wrapper shadow rounded-4 p-4 p-lg-5">
+                    <!-- Search Bar -->
+                    <div class="input-group input-group-lg mb-4">
+                        <span class="input-group-text bg-light border-0 px-4">
+                            <i class="bi bi-search text-muted fs-5"></i>
+                        </span>
+                        <input type="text" class="form-control border-0 bg-light py-3"
+                            placeholder="Contoh: Web Development, Data Science, UI/UX Design..." readonly>
+                        <button class="btn btn-primary px-4" type="button" disabled>
+                            <i class="bi bi-search me-2"></i> Cari
+                        </button>
+                    </div>
+
+                    <!-- Quick Categories -->
+                    <div class="quick-categories">
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="#" class="btn btn-outline-primary rounded-pill px-3">
+                                Web Development
+                            </a>
+                            <a href="#" class="btn btn-outline-primary rounded-pill px-3">
+                                Data Science
+                            </a>
+                            <a href="#" class="btn btn-outline-primary rounded-pill px-3">
+                                Mobile Apps
+                            </a>
+                            <a href="#" class="btn btn-outline-primary rounded-pill px-3">
+                                UI/UX Design
+                            </a>
+                            <a href="#" class="btn btn-outline-primary rounded-pill px-3">
+                                Cloud Computing
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+
+    <!-- A-Z Filter as right-aligned dropdown -->
+    <div class="row mb-3">
+        <div class="col-12 d-flex">
+            <div class="ms-auto">
+                <div id="az-filter" class="dropdown">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="azDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Filter: All
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="azDropdown">
+                        <li><a class="dropdown-item az-letter active" href="#" data-letter="all">All</a></li>
+                        @{
+                            for (char c = 'A'; c <= 'Z'; c++)
+                            {
+                                <text>
+                                    <li><a class="dropdown-item az-letter" href="#" data-letter="@c">@c</a></li>
+                                </text>
+                            }
+
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <!-- Topics Section -->
+            <section id="recent-blog-postst" class="recent-blog-postst section light-background">
+
+                <!-- Section Title -->
+                <div class="container section-title" data-aos="fade-up">
+                    <h2>Kategori</h2>
+                    <p>Paling Populer</p>
+                </div><!-- End Section Title -->
+
+                <div class="container">
+
+                    <div class="row gy-5">
+
+@await Html.PartialAsync("_Topics")
