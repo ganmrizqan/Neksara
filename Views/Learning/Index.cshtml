@@ -1,0 +1,71 @@
+@model List<Neksara.Models.Topic>
+@{
+    ViewData["Title"] = "E-Learning";
+}
+
+<h2 class="mb-4">📚 E-Learning</h2>
+
+<!-- ================= FILTER KATEGORI ================= -->
+<div class="mb-4">
+    <a href="/Learning" class="btn btn-outline-dark me-2">
+        Semua
+    </a>
+
+    @foreach (var c in ViewBag.Category)
+    {
+        <a href="/Learning?categoryId=@c.CategoryId"
+           class="btn btn-outline-primary me-2 @(ViewBag.CurrentCategory == c.CategoryId ? "active" : "")">
+            @c.CategoryName
+        </a>
+    }
+</div>
+
+<!-- ================= CARD TOPIK ================= -->
+<div class="row">
+@foreach (var t in Model)
+{
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm h-100">
+            <img src="@t.TopicPicture" class="card-img-top">
+            <div class="card-body">
+                <span class="badge bg-secondary mb-2">
+                    @t.Category?.CategoryName
+                </span>
+
+                <h5 class="card-title mt-2">
+                    @t.TopicName
+                </h5>
+
+                <p class="card-text text-muted">
+                    @(t.Description.Length > 120 ? t.Description.Substring(0,120) + "..." : t.Description)
+                </p>
+            </div>
+
+            <div class="card-footer bg-white border-0">
+                <a href="/Learning/Detail/@t.TopicId" class="btn btn-sm btn-primary">
+                    📖 Pelajari
+                </a>
+                <span class="float-end text-muted">
+                    👁 @t.ViewCount
+                </span>
+            </div>
+        </div>
+    </div>
+}
+</div>
+
+<!-- ================= PAGINATION ================= -->
+<nav class="mt-4">
+    <ul class="pagination justify-content-center">
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link"
+                   href="/Learning?page=@i&categoryId=@ViewBag.CurrentCategory">
+                    @i
+                </a>
+            </li>
+        }
+    </ul>
+</nav>
+<!-- ================= END PAGINATION ================= -->

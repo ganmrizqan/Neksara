@@ -7,12 +7,13 @@ namespace Neksara.Models
         [Key]
         public int UserId { get; set; }
         public string UserName { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public string Photo { get; set; } = string.Empty;
+        public string? PhotoUrl { get; set; }
         public string Role { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        public ICollection<TopicView> TopicViews { get; set; } = new HashSet<TopicView>();
-        public ICollection<Feedback> Feedbacks { get; set; } = new HashSet<Feedback>();
+        public ICollection<TopicView>? TopicViews { get; set; } = new HashSet<TopicView>();
+        public ICollection<Feedback>? Feedbacks { get; set; } = new HashSet<Feedback>();
     }
 }
