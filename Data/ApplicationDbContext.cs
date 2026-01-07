@@ -9,6 +9,7 @@ namespace Neksara.Data
         {
         }
 
+        public DbSet<Admin> Admins { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Topic> Topics { get; set; }
