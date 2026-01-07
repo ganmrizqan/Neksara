@@ -9,14 +9,16 @@ namespace Neksara.Data
         {
         }
 
+        public DbSet<Admin> Admins { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<TopicView> TopicViews { get; set; }
         public DbSet<SearchLog> SearchLogs { get; set; }    
-        public DbSet<Admin> Admins { get; set; }
         public DbSet<ArchiveTopic> ArchiveTopics { get; set; }
+        public DbSet<Testimoni> Testimonis { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -59,7 +61,8 @@ namespace Neksara.Data
                 entity.Property(e => e.CategoryName)
                       .IsRequired()
                       .HasMaxLength(100);
-
+                entity.Property(e => e.CategoryPicture)
+                      .HasMaxLength(255);
                 entity.Property(e => e.Description)
                       .HasMaxLength(255);
 
@@ -212,28 +215,25 @@ namespace Neksara.Data
                         .OnDelete(DeleteBehavior.Restrict);
                   });
 
-                modelBuilder.Entity<ContactMessage>(entity =>
+                modelBuilder.Entity<Testimoni>(entity =>
                  {
-                 entity.HasKey(cm => cm.ContactMessageId);
+                 entity.HasKey(cm => cm.TestimoniId);
 
-                entity.Property(cm => cm.Name)
+                 entity.Property(cm => cm.Name)
                         .IsRequired()
                         .HasMaxLength(100);
 
-                entity.Property(cm => cm.Email)
-                        .IsRequired()
-                        .HasMaxLength(150);
+                 entity.Property(e => e.Rating)
+                        .HasDefaultValue(0);
 
-                entity.Property(cm => cm.Subject)
-                        .IsRequired()
-                        .HasMaxLength(200);
+                entity.Property(e => e.IsApproved)
+                      .HasDefaultValue(false);
 
-                entity.Property(cm => cm.Message)
-                        .IsRequired();
+                entity.Property(e => e.IsVisible)
+                      .HasDefaultValue(true);
 
-                entity.Property(cm => cm.CreatedAt)
-                        .HasDefaultValueSql("GETDATE()")
-                        .IsRequired();
+                entity.Property(e => e.CreatedAt)
+                      .HasDefaultValueSql("GETDATE()");
             });
         }
     }
