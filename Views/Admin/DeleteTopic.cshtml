@@ -1,0 +1,20 @@
+@model Topic
+
+<h3 class="text-danger mb-3">Hapus Topik</h3>
+<div class="alert alert-warning">
+    <strong>Perhatian!</strong><br />
+    Topic <b>@Model.TopicName</b> akan dihapus (soft delete).
+    Data tidak akan hilang permanen.
+</div>
+ 
+<form asp-action="DeleteTopic" method="post">
+    <input type="hidden" asp-for="TopicId" />
+
+    <button type="submit" class="btn btn-danger">
+        Ya, Hapus
+    </button>
+
+    <a asp-action="Topics" class="btn btn-secondary ms-2">
+        Batal
+    </a>
+</form>

@@ -1,0 +1,52 @@
+@model List<Topic>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form method="get" class="mb-3 d-flex">
+    <input name="search" class="form-control me-2"
+           placeholder="Cari Topik..."
+           value="@ViewBag.Search" />
+    <button class="btn btn-primary">Cari</button>
+    <a href="/Admin/CreateTopic" class="btn btn-success ms-2">
+        + Tambah Topik
+    </a>
+</form>
+
+<h3>Daftar Topik</h3>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Nama Topik</th>
+            <th>Kategori</th>
+            <th>Views</th>
+            <th>Tanggal Produksi</th>
+            <th>Tanggal Publikasi</th>
+            <th width="160">Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var t in Model)
+    {
+        <tr>
+            <td>@t.TopicName</td>
+            <td>@t.Category?.CategoryName</td>
+            <td>@t.ViewCount Views</td>
+            <td>@t.CreatedAt</td>
+            <td>@t.PublishedAt</td>
+            <td>
+                <a href="/Admin/TopicDetail/@t.TopicId" class="btn btn-sm btn-primary">Detail</a>                   
+                <a href="/Admin/EditTopic/@t.TopicId" class="btn btn-sm btn-warning">Edit</a>
+                <form asp-action="DeleteTopic" asp-route-id="@t.TopicId"
+                      method="post" class="d-inline">
+                    <button class="btn btn-sm btn-danger"
+                            onclick="return confirm('Yakin hapus topik?')">
+                        Delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

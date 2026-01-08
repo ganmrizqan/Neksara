@@ -1,0 +1,21 @@
+@model Category
+
+<h3 class="text-danger mb-3">Hapus Kategori</h3>
+
+<div class="alert alert-warning">
+    <strong>Perhatian!</strong><br />
+    Kategori <b>@Model.CategoryName</b> akan dihapus (soft delete).
+    Data tidak akan hilang permanen.
+</div>
+
+<form asp-action="DeleteCategory" method="post">
+    <input type="hidden" asp-for="CategoryId" />
+
+    <button type="submit" class="btn btn-danger">
+        Ya, Hapus
+    </button>
+
+    <a asp-action="Categories" class="btn btn-secondary ms-2">
+        Batal
+    </a>
+</form>
