@@ -1,0 +1,124 @@
+@model Neksara.Models.Topic
+@{
+    ViewData["Title"] = Model.TopicName;
+    double rating = ViewBag.AvgRating ?? 0;
+}
+
+<a href="/Learning" class="btn btn-secondary mb-3">⬅️ Kembali</a>
+
+<div class="card shadow">
+    <div class="card-body">
+        <img src="@Model.TopicPicture" class="card-img-top topic-header">
+
+        <span class="badge bg-primary mb-2">
+            @Model.Category?.CategoryName
+        </span>
+
+        <h3 class="mt-2">@Model.TopicName</h3>
+
+        <!-- ⭐ RATING -->
+        <p class="mb-1">
+            <strong>@rating.ToString("0.0")</strong> / 5
+            <span class="text-warning ms-2">
+                @for (int i = 1; i <= 5; i++)
+                {
+                    if (i <= Math.Floor(rating))
+                    {
+                        <text>★</text>
+                    }
+                    else
+                    {
+                        <text>☆</text>
+                    }
+                }
+            </span>
+        </p>
+
+        <p class="text-muted">
+            👁 @Model.ViewCount kali dilihat
+        </p>
+
+        <hr />
+
+        @if (!string.IsNullOrEmpty(Model.VideoUrl))
+        {
+            <a href="@Model.VideoUrl" target="_blank" class="btn btn-danger mb-3">
+                ▶️ Tonton Video
+            </a>
+        }
+
+        <p style="white-space: pre-line;">
+            @Model.Description
+        </p>
+
+        <!-- 💬 BUTTON FEEDBACK -->
+        <button class="btn btn-outline-primary mt-3"
+                data-bs-toggle="modal"
+                data-bs-target="#feedbackModal">
+            💬 Beri Feedback
+        </button>
+    </div>
+</div>
+
+<!-- ================= MODAL FEEDBACK ================= -->
+<div class="modal fade" id="feedbackModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form method="post" action="/Feedback/Create">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Feedback Topik</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <!-- AUTO -->
+                    <input type="hidden" name="TargetType" value="Topic" />
+                    <input type="hidden" name="TargetId" value="@Model.TopicId" />
+
+                    <div class="mb-2">
+                        <label>Nama</label>
+                        <input name="Name" class="form-control" required />
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Role</label>
+                        <input name="Role" class="form-control" required />
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Rating</label>
+                        <select name="Rating" class="form-control">
+                            @for (int i = 5; i >= 1; i--)
+                            {
+                                <option value="@i">@i ⭐</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Deskripsi</label>
+                        <textarea name="Description" class="form-control" rows="3"></textarea>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Batal
+                    </button>
+                    <button class="btn btn-primary">
+                        Simpan
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+<!-- ================= END MODAL FEEDBACK ================= -->
