@@ -1,0 +1,91 @@
+@* Views/Home/Index.cshtml *@
+@{
+    ViewData["Title"] = "Neksara - E-Learning Platform";
+    ViewData["Description"] = "Belajar skill baru dengan kursus online berkualitas";
+}
+
+<!-- Search Section -->
+<div class="search-section bg-white py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <br>
+                <div class="search-wrapper shadow rounded-4 p-4 p-lg-5">
+                    <!-- Search Bar -->
+                    <div class="input-group input-group-lg mb-4">
+                        <span class="input-group-text bg-light border-0 px-4">
+                            <i class="bi bi-search text-muted fs-5"></i>
+                        </span>
+                        <input type="text" class="form-control border-0 bg-light py-3" 
+                               placeholder="Contoh: Web Development, Data Science, UI/UX Design..." 
+                               readonly>
+                        <button class="btn btn-primary px-4" type="button" disabled>
+                            <i class="bi bi-search me-2"></i> Cari
+                        </button>
+                    </div>
+                    
+                    <!-- Quick Categories -->
+                    <div class="quick-categories">
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="#" class="btn btn-outline-primary rounded-pill px-3">
+                                Web Development
+                            </a>
+                            <a href="#" class="btn btn-outline-primary rounded-pill px-3">
+                                Data Science
+                            </a>
+                            <a href="#" class="btn btn-outline-primary rounded-pill px-3">
+                                Mobile Apps
+                            </a>
+                            <a href="#" class="btn btn-outline-primary rounded-pill px-3">
+                                UI/UX Design
+                            </a>
+                            <a href="#" class="btn btn-outline-primary rounded-pill px-3">
+                                Cloud Computing
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Categories Section -->
+<section id="services" class="services section light-background">
+    <div class="container">
+        <div class="row">
+            <!-- Bagian Kiri: Judul Kategori -->
+            <div class="col-lg-8">
+                <div class="section-header-left" data-aos="fade-up">
+                    <h2>Kategori</h2>
+                    <p class="lead">Kategori yang paling dimintai oleh karyawan</p>
+                </div>
+            </div>
+            
+           <!-- Bagian Kanan: Filter -->
+            <div class="col-lg-4">
+                <div class="d-flex justify-content-lg-end mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div id="az-filter" class="dropdown">
+                        <button class="btn btn-sm btn-outline-primary dropdown-toggle d-flex align-items-center" type="button" id="azDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-filter-circle me-2"></i>
+                            Filter: All
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="azDropdown">
+                            <li><a class="dropdown-item az-letter active" href="#" data-letter="all">All</a></li>
+                            @for (char c = 'A'; c <= 'Z'; c++) {
+                                <li><a class="dropdown-item az-letter" href="#" data-letter="@c">@c</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Card Kategori -->
+        <div class="row gy-4" id="categories-row">
+            @await Html.PartialAsync("_Categories-landing")
+        </div>
+    </div>
+</section><!-- End Categories Section -->
+

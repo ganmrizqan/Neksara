@@ -1,5 +1,69 @@
-<footer id="contact" class="border-top footer text-muted">
-  <div class="container">
-    &copy; 2025 - Neksara - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+<footer id="footer" class="footer text-white" style="background-color:#9fbec2;">
+  <div class="container py-5">
+    <div class="row">
+
+      <!-- Brand -->
+      <div class="col-md-4 mb-4">
+
+        <!-- Logo -->
+        <img src="~/assets/img/Neksara.png" alt="Neksara" class="mb-3" style="height: 55px;" />
+
+        <h4 class="fw-bold">Neksara</h4>
+
+        <p class="small">
+          Growth is a choice. Learning is the path.<br />
+          Platform e-learning untuk meningkatkan skill digital.
+        </p>
+
+        <div class="d-flex gap-2">
+          <a href="#" class="text-white"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="text-white"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="text-white"><i class="bi bi-linkedin"></i></a>
+          <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
+        </div>
+
+      </div>
+
+      <!-- Explore -->
+      <div class="col-md-2 mb-4">
+        <h6 class="fw-bold">Explore</h6>
+        <ul class="list-unstyled">
+          <li><a asp-controller="Home" asp-action="Index" class="text-white text-decoration-none">Home</a></li>
+          <li><a asp-controller="Course" asp-action="Index" class="text-white text-decoration-none">E-Learning</a></li>
+          <li><a asp-controller="Home" asp-action="Contact" class="text-white text-decoration-none open-contact-modal">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Category -->
+      <div class="col-md-3 mb-4">
+        <h6 class="fw-bold">Kategori</h6>
+        <ul class="list-unstyled">
+          <li>Development</li>
+          <li>Programming</li>
+          <li>Design</li>
+          <li>Arsitek</li>
+        </ul>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="col-md-3">
+        <h6 class="fw-bold">Contact Us</h6>
+        <p class="small">Dapatkan update course terbaru.</p>
+
+        <form>
+          <input type="email" class="form-control mb-2" placeholder="Email here">
+          <button class="btn btn-primary btn-sm w-100">
+            Send <i class="bi bi-send"></i>
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <hr class="border-light">
+
+    <div class="text-center small">
+      © @DateTime.Now.Year <strong>Neksara</strong>. All Rights Reserved
+    </div>
   </div>
 </footer>

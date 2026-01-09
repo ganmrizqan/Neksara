@@ -1,0 +1,43 @@
+@* Views/Shared/_Topics.cshtml *@
+
+@for (int i = 1; i <= 6; i++)
+{
+    <div class="col-xl-3 col-lg-4 col-md-6 topic-card-item"
+     data-aos="fade-up"
+     data-aos-delay="400">
+        <div class="post-item h-100">
+
+            <div class="post-img position-relative overflow-hidden">
+                <img src="@Url.Content($"~/assets/img/blog/blog-post-{(i % 3) + 1}.webp")" class="img-fluid" alt="">
+                <span class="post-date">Frontend</span>
+            </div>
+
+            <div class="post-content d-flex flex-column">
+
+                <h3 class="post-title">
+                    Panduan Pemula untuk Menjadi Frontend Profesional
+                </h3>
+
+                <hr>
+
+                <a href="blog-details.html" class="readmore stretched-link">
+                    <span class="learn-now-text">Learn Now</span>
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+                <div class="meta-bottom">
+                    <span class="meta-date">
+                        <i class="bi bi-calendar3"></i>
+                        <span class="meta-text">12/02/2025</span>
+                    </span>
+
+                    <span class="meta-view">
+                        <span class="meta-text">400 view</span>
+                        <i class="bi bi-eye"></i>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
